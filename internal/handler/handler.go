@@ -1,8 +1,9 @@
 package handler
 
 import (
+	"todo/internal/service"
+
 	"github.com/gin-gonic/gin"
-	"todo/pkg/service"
 )
 
 type Handler struct {
@@ -16,7 +17,7 @@ func NewHandler(services *service.Service) *Handler {
 func (h *Handler) InitRoute() *gin.Engine {
 	route := gin.New()
 
-	auth := route.Group("auth")
+	auth := route.Group("/auth")
 	{
 		auth.POST("/sigh-up", h.sighUp)
 		auth.POST("/sigh-in", h.sighIn)
@@ -28,7 +29,7 @@ func (h *Handler) InitRoute() *gin.Engine {
 		{
 			lists.POST("/", h.createList)
 			lists.GET("/", h.getAllLists)
-			lists.GET("/:id", h.getListById)
+			lists.GET("/:id", h.getListById) // ":" озночает что мы ждем знчение которое мы ждем по имени параметра id
 			lists.PUT("/:id", h.updateList)
 			lists.DELETE("/:id", h.deleteList)
 

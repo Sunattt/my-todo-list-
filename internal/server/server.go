@@ -1,16 +1,18 @@
-package todo_list
+package server
 
 import (
 	"context"
 	"net/http"
 	"time"
 )
-
+//с помощью него будем запускать сервер  
 type Server struct {
 	httpServer *http.Server
 }
 
+//запуск работы 
 func (s *Server) Run(port string, handler http.Handler) error {
+	//инкапсулируем значения 	 
 	s.httpServer = &http.Server{
 		Addr:           ":" + port,
 		Handler:        handler,
@@ -22,6 +24,7 @@ func (s *Server) Run(port string, handler http.Handler) error {
 	return s.httpServer.ListenAndServe()
 }
 
+//остановка работы 
 func (s *Server) Shutdown(ctx context.Context) error {
 	return s.httpServer.Shutdown(ctx)
 }
